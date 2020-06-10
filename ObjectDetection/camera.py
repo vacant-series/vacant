@@ -4,28 +4,15 @@ import imutils
 from time import sleep
 import cv2
 import numpy as np
-#import detector
 from gpiozero import LED,MotionSensor
+from threading import Thread, Lock
 
 ms  = MotionSensor(15, pull_up=True,queue_len=5)
-
+camera_lock = Lock()
 avg = None
-
-def RedOff():
-    led = LED(17)
-    led.off()
-    print("Fuck Nathan")
-
-def RedOn():
-    led = LED(17)
-    led.on()
-    sleep(10)
-    print("Fuck Nathan")
     
     
-def main():
-    sleep(5)
-    ms.wait_for_motion()
+def detect_human():
     global avg 
     with picamera.PiCamera() as camera:
         camera.resolution = (640,480)
@@ -34,24 +21,17 @@ def main():
         camera.start_preview()
         rawCapture = np.empty((640,480,3),dtype=np.uint8)
         camera.capture(rawCapture,format="bgr")
-        #print(f)
-        #frame = f.array
+
         isPerson = False
         #frame = imutils.resize(f, width=500)
         f =rawCapture.reshape((480,640,3))
         gray = cv2.cvtColor(f, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
-        # if the average frame is None, initialize it
-        if avg is None:
-            print("[INFO] starting background model...")
-            avg = gray.copy().astype("float")
-        
         
         # accumulate the weighted average between the current frame and
         # previous frames, then compute the difference between the current
         # frame and running average
-        cv2.accumulateWeighted(gray, avg, 0.5)
         frameDelta = cv2.absdiff(gray, cv2.convertScaleAbs(avg))
         
         # threshold the delta image, dilate the thresholded image to fill
@@ -73,10 +53,48 @@ def main():
         camera.stop_preview()
 
         
+def room_averager():
+    global avg
+    # initialize the camera and grab a reference to the raw camera capture
+    with picamera.PiCamera() as camera:
+        camera.resolution = (640,480)
+        camera.framerate = 16
+        rawCapture = PiRGBArray(camera, size=(640,480))
+
+        print("[INFO] warming up...")
+        time.sleep(2.5)
+
+        # capture frames from the camera
+        for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+            # grab the raw NumPy array representing the image and initialize
+            # the timestamp and occupied/unoccupied text
+            frame = f.array
+            # resize the frame, convert it to grayscale, and blur it
+            frame = imutils.resize(frame, width=500)
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            gray = cv2.GaussianBlur(gray, (21, 21), 0)
+
+            # if the average frame is None, initialize it
+            if avg is None:
+                print("[INFO] starting background model...")
+                avg = gray.copy().astype("float")
+                rawCapture.truncate(0)
+                continue
+            # accumulate the weighted average between the current frame and
+            # previous frames
+            cv2.accumulateWeighted(gray, avg, 0.5)
+            # clear the stream in preparation for the next frame
+            rawCapture.truncate(0)
+            ms.when_motion(self.human_detector())
+
+
+def main():
+    room_averager()
+
+
 
 if __name__ == "__main__":
-    while True:
-        main()
+    main()
     
 
         
