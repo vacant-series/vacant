@@ -162,4 +162,34 @@ void delayloop(unsigned long count){
     }
 }
 
+/** toggle all pins */
+void toggleAll(){
+    PA_ODR^= 0xFF;
+    PB_ODR^= 0xFF;
+    PC_ODR^= 0xFF;
+    PD_ODR^= 0xFF;
+    PE_ODR^= 0xFF;
+    PF_ODR^= 0xFF;
+}
+
+/** set all pins */
+void setAll(){
+    PA_ODR = 0xFF;
+    PB_ODR = 0xFF;
+    PC_ODR = 0xFF;
+    PD_ODR = 0xFF;
+    PE_ODR = 0xFF;
+    PF_ODR = 0xFF;
+}
+
+/** clear all pins */
+void clearAll(){
+    PA_ODR = 0x00;
+    PB_ODR = 0x00;
+    PC_ODR = 0x00;
+    PD_ODR = 0x00;
+    PE_ODR = 0x00;
+    PF_ODR = 0x00;
+}
+
 #endif /* PINS_H */

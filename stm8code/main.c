@@ -1,5 +1,6 @@
 #include "stm8l.h"
 #include "pins.h"
+
 const unsigned char numberlut[]={0b1111110,//0
 							0b0110000,//1
 							0b1101101,//2
@@ -20,12 +21,41 @@ const unsigned char bp= 15;
 const unsigned char col= 32;
 const unsigned char alarm= 3;
 
-unsigned char digit1num=0;
-unsigned char digit2num=0;
-unsigned char digit3num=0;
-unsigned char digit4num=0;
+unsigned char digit1num;
+unsigned char digit2num;
+unsigned char digit3num;
+unsigned char digit4num;
+
+/** initializes output regs to display zero*/
+void inittimer(){
+	digit1num=0;
+	digit2num=0;
+	digit3num=0;
+	digit4num=0;
+	clearAll();
+	pinSet(col);
+	//now set some lcd pins
+	//display digit 4
+	unsigned char zcode= numberlut[0];
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit4[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit4[i]);
+    	*portnumODR(portnum) |= (zcode>>(6-i)&1)<<bitnum;
+	}
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit3[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit3[i]);
+    	*portnumODR(portnum) |= (zcode>>(6-i)&1)<<bitnum;
+	}
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit2[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit2[i]);
+    	*portnumODR(portnum) |= (zcode>>(6-i)&1)<<bitnum;
+	}
+}
 
 void inctimer(){
+	unsigned char old4= digit4num;
 	digit4num++;
 	if(digit4num==10){
 	       digit4num=0;
@@ -47,11 +77,19 @@ void inctimer(){
 	}
 	//now toggle some lcd pins
 	//display digit 4
+	unsigned char d4code= numberlut[old4];
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit4[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit4[i]);
+    	*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
+	}
+	//now toggle some lcd pins
+	//display digit 4
 	unsigned char d4code= numberlut[digit4num];
 	for(int i=0; i<7; i++){
-		unsigned char portnum= pinnum2portnum(pinnum);
-    		unsigned char bitnum= pinnum2bitnum(pinnum);
-    		*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
+		unsigned char portnum= pinnum2portnum(digit4[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit4[i]);
+    	*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
 	}
 }
 
@@ -68,11 +106,11 @@ int main() {
 	pinMode(col,OUTPUT);
 	pinMode(bp,OUTPUT);
 	pinMode(alarm,INPUT_PULL_UP);
-	//PD_DDR = 0x01;
-	//PD_CR1 = 0x01;
+
+	inittimer();
 	// Loop
 	do {
-		pinToggle(25);
+		toggleAll();
 		delayloop(29000);
 	} while(1);
 }
