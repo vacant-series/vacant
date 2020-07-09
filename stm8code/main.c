@@ -25,6 +25,7 @@ unsigned char digit1num;
 unsigned char digit2num;
 unsigned char digit3num;
 unsigned char digit4num;
+unsigned char alarmcount=0;
 
 /** initializes output regs to display zero*/
 void inittimer(){
@@ -56,6 +57,9 @@ void inittimer(){
 
 void inctimer(){
 	unsigned char old4= digit4num;
+	unsigned char old3= digit3num;
+	unsigned char old2= digit2num;
+	unsigned char old1= digit1num;
 	digit4num++;
 	if(digit4num==10){
 	       digit4num=0;
@@ -65,19 +69,23 @@ void inctimer(){
 		       digit2num++;
 		       if(digit2num==10){
 			       digit2num=0;
-			       digit1num++;
-			       if(digit1num=2){
+			       if(digit1num==1){
 				       digit1num=1;
 				       digit2num=9;
 				       digit3num=5;
 				       digit4num=9;
 			       }
+			       if(digit1num==0){
+				   digit1num=1;
+			       }
 		       }
 	       }
 	}
+	if(old1!=digit1num) pinToggle(bc1);
 	//now toggle some lcd pins
 	//display digit 4
-	unsigned char d4code= numberlut[old4];
+	unsigned char d4code;
+	d4code= numberlut[old4];
 	for(int i=0; i<7; i++){
 		unsigned char portnum= pinnum2portnum(digit4[i]);
     	unsigned char bitnum= pinnum2bitnum(digit4[i]);
@@ -85,10 +93,38 @@ void inctimer(){
 	}
 	//now toggle some lcd pins
 	//display digit 4
-	unsigned char d4code= numberlut[digit4num];
+	d4code= numberlut[digit4num];
 	for(int i=0; i<7; i++){
 		unsigned char portnum= pinnum2portnum(digit4[i]);
     	unsigned char bitnum= pinnum2bitnum(digit4[i]);
+    	*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
+	}
+	d4code= numberlut[old3];
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit3[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit3[i]);
+    	*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
+	}
+	//now toggle some lcd pins
+	//display digit 3
+	d4code= numberlut[digit3num];
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit3[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit3[i]);
+    	*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
+	}
+	d4code= numberlut[old2];
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit2[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit2[i]);
+    	*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
+	}
+	//now toggle some lcd pins
+	//display digit 2
+	d4code= numberlut[digit2num];
+	for(int i=0; i<7; i++){
+		unsigned char portnum= pinnum2portnum(digit2[i]);
+    	unsigned char bitnum= pinnum2bitnum(digit2[i]);
     	*portnumODR(portnum) ^= (d4code>>(6-i)&1)<<bitnum;
 	}
 }
@@ -110,7 +146,20 @@ int main() {
 	inittimer();
 	// Loop
 	do {
-		toggleAll();
-		delayloop(29000);
+		for(int i=0; i<10; i++){
+			if(1==pinRead(alarm)){
+				alarmcount= 0;	
+			}else{
+				alarmcount++;
+			}
+			if(alarmcount>5){
+				inittimer();
+			}
+			toggleAll();
+			delayloop(1000);
+			toggleAll();
+			delayloop(1000);
+		}
+		inctimer();
 	} while(1);
 }
