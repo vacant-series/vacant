@@ -16,4 +16,4 @@ clean:
 	@rm -rf $(ODIR)
 
 flash:
-	@sudo $(FLASHER) -cstlink -pstm8s003k3 -w$(ODIR)/main.ihx
+	@sudo $(FLASHER) -cstlinkv2 -pstm8s003k3 -w$(ODIR)/main.ihx
