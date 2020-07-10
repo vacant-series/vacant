@@ -179,6 +179,15 @@ int main() {
 	pinMode(col,OUTPUT);
 	pinMode(bp,OUTPUT);
 	pinMode(alarm,INPUT_PULL_UP);
+	//flash all segments
+	pinToggle(bp);
+	for( int i=0; i<82; i++){
+		toggleAll();
+		delayloop(1000);
+		toggleAll();
+		delayloop(1000);
+	}
+	pinToggle(bp);
 
 	inittimer();
 	// Loop
