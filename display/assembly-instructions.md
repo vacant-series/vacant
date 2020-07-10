@@ -1,1 +1,1 @@
-### Instructions to make a new display
+### Instructions to Make a Vacant Display 1.0
