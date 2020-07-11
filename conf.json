@@ -1,0 +1,11 @@
+{
+	"delta_thresh": 20,
+	"resolution": [
+		640,
+		480
+	],
+	"detection_speed":10,
+	"fps": 16,
+	"min_area": 500,
+	"timer_pin":23
+}
