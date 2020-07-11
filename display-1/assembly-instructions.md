@@ -53,7 +53,7 @@ Assuming linux OS
 1. Install https://github.com/vdudouyt/stm8flash
 2. Flash the program
 
-The on reset the program should turn on all connected segments for a second, so you can see if the display works.
+On reset the program should turn on all connected segments for a second, so you can see if the display works.
 
 
 
