@@ -4,7 +4,7 @@ LIBS=-lstm8 -mstm8
 IDIR=-I./
 ODIR=bin
 CFLAGS=$(IDIR)
-FLASHER=~/stm8flash/stm8flash
+FLASHER=stm8flash
 
 all:
 	mkdir -p $(ODIR)
