@@ -23,3 +23,8 @@ timer_pin : The pin number to cnnect the timer to
 detection_speed: The rate at which images are taken to comapare with the average image of the room. Larger values would lead to slower detection rate
 
 command to run  the sript: python3 /home/pi/vacant/ObjectDetection/camera.py --conf /home/pi/vacant/ObjectDetection/conf.json 
+
+set up:
+plug a usb power source to the two radio display units
+Then plug the three cables coming out of the raspberrypi into the transmitter radio by putting ash cable in the label 1, white cable in label two and black cabel in label 3 on the screw terminal in the transmiter radio
+Power up the raspberrypi
