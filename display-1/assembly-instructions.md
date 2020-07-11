@@ -50,8 +50,10 @@ The PCB, the gerber files are availible through https://easyeda.com/nzimmerberg/
 
 Assuming linux OS
 
+1. Install http://sdcc.sourceforge.net/
 1. Install https://github.com/vdudouyt/stm8flash
-2. Flash the program
+1. Run `make` in stm8code directory.
+1. Run `make flash` in stm8code directory with ST-Link V2 connected to the 4 pin SWIM connector.
 
 On reset the program should turn on all connected segments for a second, so you can see if the display works.
 
