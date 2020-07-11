@@ -1,8 +1,10 @@
 # vacant
 Check if a room is unoccupied.
-Our JSON configuration filelet’s take a look at our conf.json  file:
+
+Let’s take a look at our conf.json  file:
 
 vacant with the Raspberry Pi, Python, and OpenCV
+```
 {
 	"delta_thresh": 20,
 	"resolution": [
@@ -14,6 +16,7 @@ vacant with the Raspberry Pi, Python, and OpenCV
 	"min_area": 500,
 	"timer_pin":23
 }
+```
 This JSON configuration file stores a bunch of important variables. Let’s look at each of them:
 delta_thresh : The minisum absolute value difference between our current frame and averaged frame for a given pixel to be “triggered” as motion. Smaller values will lead to more motion being detected, larger values to less motion detected.
 resolution : The width and height of the video frame from our Raspberry Pi camera.
