@@ -40,3 +40,5 @@ plug a usb power source to the two radio display units
 Then plug the three cables coming out of the raspberrypi into the transmitter radio by putting ash cable in the label 1, white cable in label two and black cabel in label 3 on the screw terminal in the transmiter radio
 
 Power up the raspberrypi
+
+[Display 1 Readme](display-1/README.md)
