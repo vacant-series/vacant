@@ -4,7 +4,7 @@
 
 #include "stm8l.h"
 
-/** Returns the port number, 1 is A, 6 is F, 0 is none*/
+/** Returns the port number, 0 is A, 5 is F, 0xFF is none*/
 inline unsigned char pinnum2portnum(unsigned char pinnum){
     const unsigned char portnums[]={0xFF,//0
                                     0xFF,//1
