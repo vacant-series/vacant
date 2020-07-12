@@ -1,3 +1,5 @@
 # Basic Operation
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/9w9oqg-CDX8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+https://youtu.be/9w9oqg-CDX8
+
+You can get a simple magnet switch from amazon, and the PIR motion sensor from sparkfun https://www.sparkfun.com/products/13285
