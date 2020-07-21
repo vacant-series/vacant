@@ -39,7 +39,7 @@ class Vacant():
         num_of_min_cnts = 0
         for c in cnts:
             # if the contour is too small, ignore it
-            if cv2.contourArea(c) < 20:
+            if cv2.contourArea(c) < 5:
                 num_of_min_cnts+=1
                 continue
             self.hold_clock()
