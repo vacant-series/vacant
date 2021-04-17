@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>4</fileVersion>
-    <fileChecksum>2687286731</fileChecksum>
+    <fileChecksum>2170026880</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$PROJ_DIR$\Debug\Obj\main.xcl</file>
+            <file>$PROJ_DIR$\main.c</file>
             <file>$PROJ_DIR$\Debug\Obj\main.o</file>
             <file>$PROJ_DIR$\Debug\Exe\display2.out</file>
             <file>$PROJ_DIR$\Debug\Obj\display2.pbd</file>
-            <file>$PROJ_DIR$\main.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.xcl</file>
+            <file>$TOOLKIT_DIR$\lib\dlstm8smn.a</file>
+            <file>$PROJ_DIR$\pins.h</file>
+            <file>$PROJ_DIR$\stm8l.h</file>
+            <file>$PROJ_DIR$\rtc.h</file>
+            <file>$TOOLKIT_DIR$\config\lnkstm8.icf</file>
+            <file>$PROJ_DIR$\Debug\List\display2.map</file>
+            <file>$TOOLKIT_DIR$\lib\dbgstm8smd.a</file>
+            <file>$PROJ_DIR$\lcd.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\intrinsics.h</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>ILINK</name>
-                    <file> 2</file>
+                    <file> 2 10</file>
                 </tool>
             </outputs>
         </file>
@@ -24,15 +33,40 @@
             <name>$PROJ_DIR$\main.c</name>
             <outputs>
                 <tool>
+                    <name>BICOMP</name>
+                    <file> 4</file>
+                </tool>
+                <tool>
                     <name>ICCSTM8</name>
                     <file> 1</file>
                 </tool>
+            </outputs>
+            <inputs>
                 <tool>
-                    <name>BICOMP</name>
-                    <file> 0</file>
+                    <name>ICCSTM8</name>
+                    <file> 13 7 6 8 12</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Debug\Exe\display2.out</name>
+            <outputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 10</file>
                 </tool>
             </outputs>
+            <inputs>
+                <tool>
+                    <name>ILINK</name>
+                    <file> 9 1 5 11</file>
+                </tool>
+            </inputs>
         </file>
+        <forcedrebuild>
+            <name>$PROJ_DIR$\main.c</name>
+            <tool>ICCSTM8</tool>
+        </forcedrebuild>
         <forcedrebuild>
             <name>[MULTI_TOOL]</name>
             <tool>ILINK</tool>
