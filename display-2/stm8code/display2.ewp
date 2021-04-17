@@ -16,7 +16,7 @@
                 <debug>1</debug>
                 <option>
                     <name>GenDeviceSelectMenu</name>
-                    <state>UnspecifiedSTM8	STM8 - Unspecified</state>
+                    <state>STM8L052C6	STM8L052C6</state>
                 </option>
                 <option>
                     <name>GenCodeModel</name>
