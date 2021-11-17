@@ -48,10 +48,9 @@ The PCB, the gerber files are availible through https://easyeda.com/nzimmerberg/
 
 #### Programming
 
-Assuming linux OS
+Using Windows OS:
 
-1. Install http://sdcc.sourceforge.net/
-1. Install https://github.com/vdudouyt/stm8flash
+1. Install https://www.iar.com/products/architectures/st/iar-embedded-workbench-for-stm8/
 1. Run `make` in stm8code directory.
 1. Run `make flash` in stm8code directory with ST-Link V2 connected to the 4 pin SWIM connector.
 
