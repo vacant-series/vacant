@@ -38,21 +38,21 @@ The PCB, the gerber files are availible through https://easyeda.com/nzimmerberg/
 
 #### Soldering
 
-1. Solder the surface mount components, use lots of flux, and wear gloves.
-2. Make sure the USB is fully soldered and won't fall off.
-3. Solder the 3.3V regulator or short Vdd to 5V, depending on the voltage of the LCD.
-3. Clean the flux residue with the toothbrush and isopropyl alcohol.
+6. Solder the magnetic field sensors.
 4. Solder the LCD display to the front in the correct direction.
 5. Clip off the excess pin from the LCD.
-6. Solder the screw terminal and clip excess pin.
+
 
 #### Programming
 
 Using Windows OS:
 
 1. Install https://www.iar.com/products/architectures/st/iar-embedded-workbench-for-stm8/
-1. Run `make` in stm8code directory.
-1. Run `make flash` in stm8code directory with ST-Link V2 connected to the 4 pin SWIM connector.
+1. Open the `display2.eww` file to open the project.
+1. Install the battery in the display.
+1. Use the ST-Link/V2 to download the program.
+1. Pin 1 goes to Vdd.
+1. In IAR run project->Download->Download active application
 
 On reset the program should turn on all connected segments for a second, so you can see if the display works.
 
